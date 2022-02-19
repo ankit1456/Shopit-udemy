@@ -1,7 +1,7 @@
-const Product = require("../models/productModel");
-const ErrorHandler = require("../utils/errorHandler");
-const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
-const APIFeatures = require("../utils/apiFeatures");
+const Product = require('../models/productModel');
+const ErrorHandler = require('../utils/errorHandler');
+const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
+const APIFeatures = require('../utils/apiFeatures');
 // const cloudinary = require("cloudinary");
 
 // Create new product   =>   /api/v1/admin/product/new
@@ -27,7 +27,7 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
   //   }
 
   //   req.body.images = imagesLinks;
-  //   req.body.user = req.user.id;
+  req.body.user = req.user.id;
 
   const product = await Product.create(req.body);
 
@@ -46,6 +46,7 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
     .pagination();
 
   const products = await apiFeatures.query;
+
   res.status(200).json({
     success: true,
     count: products.length,
@@ -68,7 +69,7 @@ exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
 
   if (!product) {
-    return next(new ErrorHandler("Product not found", 404));
+    return next(new ErrorHandler('Product not found', 404));
   }
 
   res.status(200).json({
@@ -82,7 +83,7 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
   let product = await Product.findById(req.params.id);
 
   if (!product) {
-    return next(new ErrorHandler("Product not found", 404));
+    return next(new ErrorHandler('Product not found', 404));
   }
 
   //   let images = [];
@@ -133,7 +134,7 @@ exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
 
   if (!product) {
-    return next(new ErrorHandler("Product not found", 404));
+    return next(new ErrorHandler('Product not found', 404));
   }
 
   // Deleting images associated with the product
@@ -147,7 +148,7 @@ exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    message: "Product is deleted.",
+    message: 'Product is deleted.',
   });
 });
 

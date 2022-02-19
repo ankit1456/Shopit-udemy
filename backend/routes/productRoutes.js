@@ -1,20 +1,20 @@
-const express = require("express");
+const express = require('express');
 const {
   newProduct,
   getProducts,
   getSingleProduct,
   updateProduct,
   deleteProduct,
-} = require("../controllers/productController");
-const app = express();
+} = require('../controllers/productController');
+const { isAuthenticatedUser } = require('../middlewares/auth');
 
 const router = express.Router();
 
-router.route("/").get(getProducts).post(newProduct);
+router.route('/').get(getProducts).post(isAuthenticatedUser, newProduct);
 router
-  .route("/:id")
+  .route('/:id')
   .get(getSingleProduct)
-  .patch(updateProduct)
-  .delete(deleteProduct);
+  .patch(isAuthenticatedUser, updateProduct)
+  .delete(isAuthenticatedUser, deleteProduct);
 
 module.exports = router;

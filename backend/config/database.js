@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const connectDatabase = () => {
   mongoose
@@ -7,10 +7,8 @@ const connectDatabase = () => {
       useUnifiedTopology: true,
       useCreateIndex: true,
     })
-    .then((con) => {
-      console.log(
-        `MongoDB Database connected with HOST: ${con.connection.host} 😊😊`
-      );
+    .then(() => {
+      console.log('database connected successfully 😊😊');
     });
 };
 
